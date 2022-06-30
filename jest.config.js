@@ -4,5 +4,4 @@ module.exports = {
   setupFiles: ["<rootDir>/tests/envVariables.js"],
   testEnvironment: "node",
   verbose: true,
-  testTimeout: 10000,
 };

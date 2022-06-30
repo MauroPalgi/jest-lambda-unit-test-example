@@ -1,4 +1,4 @@
-const lambdajokes = require("../functions/lambdaJokes");
+const lambdaJokes = require("../functions/lambdaJokes");
 
 describe("Test Lambda Jokes function", () => {
   const OLD_ENV = process.env;
@@ -13,16 +13,16 @@ describe("Test Lambda Jokes function", () => {
   });
 
   test("This should return an Object with category = Programming", async () => {
-    const joke = await lambdajokes.handler({ category: "Programming" });
+    const joke = await lambdaJokes.handler({ category: "Programming" });
     expect(joke.category).toBe("Programming");
   });
   test("This should return an Object with category = Any", async () => {
-    const joke = await lambdajokes.handler();
+    const joke = await lambdaJokes.handler();
     expect(joke.category).not.toBe("empty");
   });
   test("This should return an Object with category = empty", async () => {
     process.env.ERROR = "true";
-    const joke = await lambdajokes.handler();
+    const joke = await lambdaJokes.handler();
     expect(joke.category).toBe("empty");
   });
 });

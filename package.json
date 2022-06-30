@@ -8,10 +8,11 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.1",
-    "dotenv": "^16.0.1"
+    "dotenv": "^16.0.1",
+    "jest-cli": "^28.1.2"
   },
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest -i --colors --verbose"
   },
   "devDependencies": {
     "aws-sdk": "^2.815.0",
