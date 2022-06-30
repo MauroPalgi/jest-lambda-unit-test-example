@@ -2,6 +2,7 @@ module.exports = {
   collectCoverageFrom: ["functions/*.{js,jsx}"],
   coveragePathIgnorePatterns: ["<rootDir>/node_modules/"],
   setupFiles: ["<rootDir>/tests/envVariables.js"],
-  verbose: false,
+  testEnvironment: "node",
+  verbose: true,
   testTimeout: 10000,
 };

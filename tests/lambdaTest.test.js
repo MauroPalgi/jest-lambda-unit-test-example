@@ -1,19 +1,28 @@
-const lambda = require("../functions/lambda");
+const lambdajokes = require("../functions/lambdaJokes");
 
-describe("test lambda function", () => {
+describe("Test Lambda Jokes function", () => {
   const OLD_ENV = process.env;
 
   beforeEach(() => {
-    jest.resetModules(); // this is important - it clears the cache
-    process.env = { ...OLD_ENV, stage: "dev" };
+    jest.resetModules();
+    process.env = { ...OLD_ENV, stage: "local" };
   });
 
   afterEach(() => {
     process.env = OLD_ENV;
   });
 
-  test("This should return ", async () => {
-    const value = await lambda.lambdaHandler({ name: "Mauro" });
-    expect(value).toBe("b");
+  test("This should return an Object with category = Programming", async () => {
+    const joke = await lambdajokes.handler({ category: "Programming" });
+    expect(joke.category).toBe("Programming");
+  });
+  test("This should return an Object with category = Any", async () => {
+    const joke = await lambdajokes.handler();
+    expect(joke.category).not.toBe("empty");
+  });
+  test("This should return an Object with category = empty", async () => {
+    process.env.ERROR = "true";
+    const joke = await lambdajokes.handler();
+    expect(joke.category).toBe("empty");
   });
 });
