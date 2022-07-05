@@ -2,17 +2,13 @@ require("dotenv").config();
 const axios = require("axios");
 
 exports.handler = async (event, context) => {
-  let joke = {
-    category: "empty",
-    setup: "empty",
-    delivery: "empty",
-  };
   const jokeCat = event?.category;
 
+  if (process.env.ERROR == "true") {
+    throw new Error("Error Simulated from Eviroment Variable ERROR");
+  }
+
   try {
-    if (process.env.ERROR == "true") {
-      throw new Error("Error Simulated from Global Variable");
-    }
     const { data } = await axios.get(
       `https://v2.jokeapi.dev/joke/${jokeCat || "Any"}`
     );

@@ -1,13 +1,18 @@
-const lambdaJokes = require("../functions/lambdaJokes");
+const lambdaJokes = require("../functions/lambdaJokes").handler;
 
 describe("Test Lambda Jokes function", () => {
-  // This part it's just to clean de global enviroment
-  // Creating a copy of the Old ones
   const OLD_ENV = process.env;
+  const posibleCategories = [
+    "Programming",
+    "Misc",
+    "Dark",
+    "Pun",
+    "Spooky",
+    "Christmas",
+  ];
 
   beforeEach(() => {
     jest.resetModules();
-    // Restoring global variables to it's initial values
     process.env = { ...OLD_ENV, ERROR: "false" };
   });
 
@@ -15,20 +20,32 @@ describe("Test Lambda Jokes function", () => {
     process.env = OLD_ENV;
   });
 
-  // TEST
   test("This should return an Object with category = Programming", async () => {
     const lambdaEvnt = { category: "Programming" };
-    // this is the event obj that the lambda will received
-    const joke = await lambdaJokes.handler(lambdaEvnt);
-    expect(joke.category).toBe("Programming");
+    try {
+      const joke = await lambdaJokes(lambdaEvnt);
+      expect(joke.category).toBe("Programming");
+    } catch (error) {
+      console.log(error.message);
+    }
   });
   test("This should return an Object with category = Any", async () => {
-    const joke = await lambdaJokes.handler();
-    expect(joke.category).not.toBe("empty");
+    try {
+      const joke = await lambdaJokes();
+      expect(posibleCategories).toContaine(joke.category);
+    } catch (error) {
+      console.log(error.message);
+    }
   });
-  test("This should return an Object with category = empty", async () => {
+  test("This should throw an error with message = Error Simulated from Global Variable", async () => {
     process.env.ERROR = "true";
-    const joke = await lambdaJokes.handler();
-    expect(joke.category).toBe("empty");
+    expect.assertions(1);
+    try {
+      await lambdaJokes();
+    } catch (error) {
+      expect(error.message).toBe(
+        "Error Simulated from Eviroment Variable ERROR"
+      );
+    }
   });
 });
