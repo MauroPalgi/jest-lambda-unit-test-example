@@ -32,7 +32,7 @@ describe("Test Lambda Jokes function", () => {
   test("This should return an Object with category = Any", async () => {
     try {
       const joke = await lambdaJokes();
-      expect(posibleCategories).toContaine(joke.category);
+      expect(posibleCategories).toContain(joke.category);
     } catch (error) {
       console.log(error.message);
     }
